@@ -1,4 +1,4 @@
-package com.stratosphere.account.domain.exceptions;
+package com.stratosphere.account.exceptions;
 
 public final class PasswordNotValidException extends CustomException{
     private static final String detail = "Password not valid";

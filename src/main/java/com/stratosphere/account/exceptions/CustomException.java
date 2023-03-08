@@ -1,4 +1,4 @@
-package com.stratosphere.account.domain.exceptions;
+package com.stratosphere.account.exceptions;
 
 import java.util.Date;
 

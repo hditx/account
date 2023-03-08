@@ -1,7 +1,7 @@
 package com.stratosphere.account.shared.infrastructure;
 
 import com.stratosphere.account.domain.Account;
-import com.stratosphere.account.infrastructure.AccountRepository;
+import com.stratosphere.account.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

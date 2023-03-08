@@ -1,4 +1,4 @@
-package com.stratosphere.account.infrastructure.handler;
+package com.stratosphere.account.handler;
 
 import java.io.Serializable;
 

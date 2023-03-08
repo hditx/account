@@ -1,4 +1,4 @@
-package com.stratosphere.account.application;
+package com.stratosphere.account.dto;
 
 import java.util.List;
 

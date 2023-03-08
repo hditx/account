@@ -1,9 +1,14 @@
-package com.stratosphere.account.application;
+package com.stratosphere.account.service.impl;
 
 import com.stratosphere.account.domain.Account;
 import com.stratosphere.account.domain.Phone;
-import com.stratosphere.account.infrastructure.AccountRepository;
+import com.stratosphere.account.dto.AuthenticatedAccountCommand;
+import com.stratosphere.account.dto.PhoneCommand;
+import com.stratosphere.account.repository.AccountRepository;
+import com.stratosphere.account.service.AuthenticatedAccount;
 import com.stratosphere.account.shared.config.JwtGenerate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,7 +19,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class AuthenticatedAccount {
+public class AuthenticatedAccountImpl implements AuthenticatedAccount {
 
     @Autowired
     private AccountRepository repository;
@@ -22,7 +27,12 @@ public class AuthenticatedAccount {
     @Autowired
     private JwtGenerate generate;
 
+
+    private final Logger log = LoggerFactory.getLogger(AuthenticatedAccountImpl.class);
+
+    @Override
     public AuthenticatedAccountCommand invoke() {
+        log.info("Authenticated who user is");
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return parseToAccountCmd(repository.findByEmail(email));
     }

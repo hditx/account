@@ -1,10 +1,10 @@
-package com.stratosphere.account.infrastructure.controller;
+package com.stratosphere.account.controller;
 
-import com.stratosphere.account.application.CreateAccount;
-import com.stratosphere.account.application.CreateAccountCommand;
-import com.stratosphere.account.domain.exceptions.AccountExistException;
-import com.stratosphere.account.domain.exceptions.EmailNotValidException;
-import com.stratosphere.account.domain.exceptions.PasswordNotValidException;
+import com.stratosphere.account.service.CreateAccount;
+import com.stratosphere.account.dto.CreateAccountCommand;
+import com.stratosphere.account.exceptions.AccountExistException;
+import com.stratosphere.account.exceptions.EmailNotValidException;
+import com.stratosphere.account.exceptions.PasswordNotValidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
-package com.stratosphere.account.infrastructure.controller;
+package com.stratosphere.account.controller;
 
-import com.stratosphere.account.application.AuthenticatedAccount;
+import com.stratosphere.account.service.AuthenticatedAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

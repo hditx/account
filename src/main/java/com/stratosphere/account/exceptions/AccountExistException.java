@@ -1,4 +1,4 @@
-package com.stratosphere.account.domain.exceptions;
+package com.stratosphere.account.exceptions;
 
 public final class AccountExistException extends CustomException{
     private static final String detail = "Account is already";

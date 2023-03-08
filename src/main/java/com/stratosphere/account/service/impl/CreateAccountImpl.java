@@ -1,11 +1,16 @@
-package com.stratosphere.account.application;
+package com.stratosphere.account.service.impl;
 
 import com.stratosphere.account.domain.Account;
-import com.stratosphere.account.domain.exceptions.AccountExistException;
-import com.stratosphere.account.domain.exceptions.EmailNotValidException;
-import com.stratosphere.account.domain.exceptions.PasswordNotValidException;
-import com.stratosphere.account.infrastructure.AccountRepository;
+import com.stratosphere.account.exceptions.AccountExistException;
+import com.stratosphere.account.exceptions.EmailNotValidException;
+import com.stratosphere.account.exceptions.PasswordNotValidException;
+import com.stratosphere.account.dto.AccountGeneratedCommand;
+import com.stratosphere.account.dto.CreateAccountCommand;
+import com.stratosphere.account.repository.AccountRepository;
+import com.stratosphere.account.service.CreateAccount;
 import com.stratosphere.account.shared.config.JwtGenerate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -15,7 +20,7 @@ import java.util.HashSet;
 import java.util.UUID;
 
 @Service
-public class CreateAccount {
+public class CreateAccountImpl implements CreateAccount {
 
     @Autowired
     private AccountRepository repository;
@@ -23,11 +28,15 @@ public class CreateAccount {
     @Autowired
     private JwtGenerate generate;
 
+    private final Logger log = LoggerFactory.getLogger(CreateAccountImpl.class);
+    @Override
     public AccountGeneratedCommand invoke(CreateAccountCommand cmd) throws EmailNotValidException, PasswordNotValidException, AccountExistException {
+        log.info("Init creation new account");
         validateEmail(cmd.getEmail());
         validatePassword(cmd.getPassword());
         validateExistAccount(cmd.getEmail());
         Account account = parseToUser(cmd);
+        log.info("Finish creation new account");
         return parseToAccountGeneratedCommand(repository.save(account));
     }
 

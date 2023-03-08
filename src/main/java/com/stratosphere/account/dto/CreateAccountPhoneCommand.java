@@ -1,4 +1,4 @@
-package com.stratosphere.account.application;
+package com.stratosphere.account.dto;
 
 public final class CreateAccountPhoneCommand {
     private long number;

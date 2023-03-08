@@ -1,4 +1,4 @@
-package com.stratosphere.account.infrastructure;
+package com.stratosphere.account.repository;
 
 import com.stratosphere.account.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

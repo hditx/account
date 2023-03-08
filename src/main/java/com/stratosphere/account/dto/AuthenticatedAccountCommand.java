@@ -1,4 +1,4 @@
-package com.stratosphere.account.application;
+package com.stratosphere.account.dto;
 
 import java.io.Serializable;
 import java.util.List;
