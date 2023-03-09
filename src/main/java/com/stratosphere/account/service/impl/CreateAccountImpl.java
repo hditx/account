@@ -1,6 +1,8 @@
 package com.stratosphere.account.service.impl;
 
 import com.stratosphere.account.domain.Account;
+import com.stratosphere.account.domain.Phone;
+import com.stratosphere.account.dto.CreateAccountPhoneCommand;
 import com.stratosphere.account.exceptions.AccountExistException;
 import com.stratosphere.account.exceptions.EmailNotValidException;
 import com.stratosphere.account.exceptions.PasswordNotValidException;
@@ -16,8 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CreateAccountImpl implements CreateAccount {
@@ -36,20 +38,22 @@ public class CreateAccountImpl implements CreateAccount {
         validatePassword(cmd.getPassword());
         validateExistAccount(cmd.getEmail());
         Account account = parseToUser(cmd);
-        log.info("Finish creation new account");
         AccountGeneratedCommand command = parseToAccountGeneratedCommand(repository.save(account));
         log.info("Account create success " + command.getId());
+        log.info("Finish creation new account");
         return command;
     }
 
     private Account parseToUser(CreateAccountCommand cmd) {
-        return new Account(
-                UUID.randomUUID().toString(),
-                cmd.getName(),
-                cmd.getEmail(),
-                DigestUtils.md5DigestAsHex(cmd.getPassword().getBytes(StandardCharsets.UTF_8)),
-                new HashSet<>(cmd.getPhones())
-        );
+        Account account = new Account();
+        account.setId(UUID.randomUUID().toString());
+        account.setName(cmd.getName());
+        account.setEmail(cmd.getEmail());
+        account.setCreated(new Date());
+        account.setPassword(DigestUtils.md5DigestAsHex(cmd.getPassword().getBytes(StandardCharsets.UTF_8)));
+        account.setActive(true);
+        account.setPhones(parseToPhone(cmd.getPhones()));
+        return account;
     }
 
     private void validateEmail(String email) throws EmailNotValidException {
@@ -78,5 +82,16 @@ public class CreateAccountImpl implements CreateAccount {
                 generate.generateToken(account),
                 account.isActive()
         );
+    }
+
+    public Set<Phone> parseToPhone(List<CreateAccountPhoneCommand> phones) {
+        return phones.stream()
+                .map(it -> Phone.builder()
+                        .id(UUID.randomUUID().toString())
+                        .number(it.getNumber())
+                        .cityCode(it.getCityCode())
+                        .countryCode(it.getCountryCode())
+                        .build())
+                .collect(Collectors.toSet());
     }
 }
