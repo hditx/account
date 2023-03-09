@@ -13,3 +13,5 @@ El stack tecnologico que se utilizo para el desarrollo fue:
 * Java 8
 * Spring Boot
 * H2 BD
+* Lombok
+* Swagger
