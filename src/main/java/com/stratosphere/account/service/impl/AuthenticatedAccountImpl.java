@@ -34,10 +34,13 @@ public class AuthenticatedAccountImpl implements AuthenticatedAccount {
     public AuthenticatedAccountCommand invoke() {
         log.info("Authenticated who user is");
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return parseToAccountCmd(repository.findByEmail(email));
+        AuthenticatedAccountCommand command =  parseToAccountCmd(repository.findByEmail(email));
+        log.info("Account login " + command.getId());
+        return command;
     }
 
     public AuthenticatedAccountCommand parseToAccountCmd(Account account) {
+        log.info("Parse account to accountCommand");
         String token = generateToken(account);
         List<PhoneCommand> phones = getPhones(account.getPhones());
         return new AuthenticatedAccountCommand(

@@ -7,8 +7,7 @@ Nota: * Son campos obligatorios
 ---
 
 ###Diagramas
-A continuacion esta el link de los diagramas de secuncia y componentes
-https://drive.google.com/file/d/1aJwkBfrlZBmxEpUs9BI-vddUnKp-i7Cf/view?usp=sharing
+Los diagramas se encuentran en el directorio resources/diagramas en formato jpg.
 ###Stack
 El stack tecnologico que se utilizo para el desarrollo fue:
 * Java 8

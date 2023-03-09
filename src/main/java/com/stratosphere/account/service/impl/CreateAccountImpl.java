@@ -37,7 +37,9 @@ public class CreateAccountImpl implements CreateAccount {
         validateExistAccount(cmd.getEmail());
         Account account = parseToUser(cmd);
         log.info("Finish creation new account");
-        return parseToAccountGeneratedCommand(repository.save(account));
+        AccountGeneratedCommand command = parseToAccountGeneratedCommand(repository.save(account));
+        log.info("Account create success " + command.getId());
+        return command;
     }
 
     private Account parseToUser(CreateAccountCommand cmd) {
@@ -51,16 +53,19 @@ public class CreateAccountImpl implements CreateAccount {
     }
 
     private void validateEmail(String email) throws EmailNotValidException {
+        log.info("Validate email formant");
         if (!email.matches("^[a-z]*@([a-z]+\\.)+[a-z]{2,7}"))
             throw new EmailNotValidException();
     }
 
     private void validatePassword(String password) throws PasswordNotValidException {
+        log.info("Validate password format");
         if(!password.matches("(?=.*[0-9].{2})(?=.*[a-z])(?=.*[A-Z].{1}).{8,12}$"))
             throw new PasswordNotValidException();
     }
 
     private void validateExistAccount(String email) throws AccountExistException {
+        log.info("Validate an exist account");
         if(repository.findByEmail(email) != null)
             throw new AccountExistException();
     }
